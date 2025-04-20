@@ -1,5 +1,218 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #1a1a1a; /* Dark background like Polkadot Gifts */
+  color: #e0e0e0; /* Light grey text */
+  min-height: 100vh;
+}
+
+.App-container { /* Added a container for the heading and the app card */
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem; /* Add horizontal padding */
+}
+
+.main-heading {
+    color: #fff; /* White main heading */
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem; /* Larger heading */
+    font-weight: 600;
+}
+
 .App {
-  text-align: center;
+  /* max-width: 800px; */ /* Max width now handled by App-container */
+  /* margin: 2rem auto; */
+  padding: 2.5rem; /* Increased padding */
+  background-color: #262626; /* Slightly lighter dark card */
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  color: #e0e0e0; /* Light text inside card */
+}
+
+nav {
+  background-color: transparent; /* Make nav transparent */
+  border-radius: 8px;
+  margin-bottom: 2.5rem; /* More space below nav */
+  padding: 0; /* Remove nav-specific padding, rely on flex spacing */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav div:first-child a {
+  text-decoration: none;
+  color: #e0e0e0; /* Light grey links */
+  font-weight: 500;
+  margin-right: 2rem; /* More space between links */
+  transition: color 0.2s ease;
+  padding: 0.5rem 0; /* Add some vertical padding for click area */
+}
+
+nav div:first-child a:hover,
+nav div:first-child a.active { /* Add active state potentially later */
+  color: #e6007a; /* Polkadot pink/magenta */
+}
+
+nav div:last-child span {
+    color: #e0e0e0;
+    font-weight: 500;
+    margin-right: 1rem; /* Space before button */
+}
+
+/* Standard Button Style (Inspired by Polkadot Gifts) */
+button {
+  background-color: #e6007a; /* Polkadot pink/magenta */
+  color: #ffffff; /* White text */
+  border: none;
+  padding: 14px 28px; /* Generous padding */
+  border-radius: 8px; /* Less rounded than before */
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background-color: #c4006a; /* Darker pink/magenta */
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background-color: #555; /* Darker disabled background */
+  color: #999; /* Lighter disabled text */
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Navbar connect button styling */
+nav button {
+    /* Keep standard style or customize */
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 12px 18px;
+  border: 1px solid #444; /* Darker border */
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-right: 10px;
+  background-color: #333; /* Darker input background */
+  color: #e0e0e0; /* Light text */
+  width: calc(100% - 40px); /* Adjust width based on padding */
+}
+
+/* Adjust specific input widths if needed */
+.form-group input#giftUrl {
+    width: calc(100% - 180px); /* Example: Adjust width for claim URL input+button */
+}
+
+
+label {
+  display: block; /* Labels on their own line */
+  margin-bottom: 0.75rem; /* Space below label */
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+h1, h2 {
+  color: #ffffff; /* White headings inside card */
+  border-bottom: 1px solid #444;
+  padding-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 2rem; /* More space below headings */
+}
+
+main > div > div { 
+  margin-bottom: 2.5rem; /* Increased spacing between sections */
+}
+
+.form-group {
+    margin-bottom: 1.5rem; /* Increased spacing */
+}
+
+/* Removed label block display from here, handled above */
+/* .form-group label { */
+    /* display: block; */ 
+    /* margin-bottom: 0.5rem; */
+/* } */
+
+.status-message {
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    background-color: #333; /* Dark background for messages */
+    border: 1px solid #444;
+    color: #e0e0e0;
+}
+
+.error-message {
+    background-color: #5a1d2b; /* Dark red */
+    border-color: #e6007a;
+    color: #fcc;
+}
+
+.success-message {
+    background-color: #1f4a3f; /* Dark green */
+    border-color: #00b38a;
+    color: #9fefdf;
+}
+
+.claim-link-section {
+    display: flex;
+    align-items: center;
+}
+
+.claim-link-section input {
+    flex-grow: 1; /* Allow input to take space */
+    margin-right: 10px;
+    width: auto; /* Override previous width */
+}
+
+.claim-link-section button {
+    padding: 12px 20px; /* Adjust padding */
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.account-selector {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #e0e0e0;
+}
+
+.account-selector label {
+    display: inline-block; /* Keep label and select inline */
+    margin-bottom: 0;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+.account-selector select {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+/* Specific component adjustments */
+.send-gift-form > div {
+    margin-bottom: 1.5rem;
+}
+
+/* Ensure button spacing in claim form */
+.claim-gift-actions button {
+    margin-top: 1rem;
 }
 
 .App-logo {
