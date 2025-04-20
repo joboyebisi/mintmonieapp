@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# MintMonie
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+MintMonie is a web application designed to simplify the process of sending Polkadot (DOT) cryptocurrency as gifts. Users can connect their Polkadot wallet, specify a recipient address and amount, send the DOT gift securely using native blockchain features, and generate a unique claim link for the recipient.
 
-## Available Scripts
+## Live Demo
 
-In the project directory, you can run:
+Check out the live deployment on Vercel:
+**[https://mintmonieapp-avjnquaye-job-oyebisis-projects.vercel.app/](https://mintmonieapp-avjnquaye-job-oyebisis-projects.vercel.app/)**
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+*   **Connect Wallet:** Integrates with the Polkadot{.js} browser extension (and compatible extensions like Talisman) to allow users to connect their Polkadot accounts.
+*   **Send DOT Gifts:** Facilitates sending DOT using the native `balances.transferKeepAlive` extrinsic, ensuring recipient accounts meet the existential deposit requirements.
+*   **Generate Gift Link:** Creates a unique URL containing a gift ID after a successful transaction.
+*   **Claim Gifts:** Allows recipients to use the unique gift link to view gift details and confirm the claim (currently simulated via application state).
+*   **Swap Placeholder:** Includes a dedicated section as a placeholder for future integration with services like SpaceWalk for DOT-to-USDC swaps.
+*   **Themed UI:** Styled with a dark theme inspired by the Polkadot ecosystem aesthetic.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How It Works (Technical Overview)
 
-### `npm test`
+*   **Frontend:** Built with **React** using `create-react-app`. **React Router** handles navigation between Send, Claim, and Swap pages.
+*   **Wallet Interaction:** Uses **`@polkadot/extension-dapp`** to detect installed Polkadot browser extensions, request user authorization, retrieve accounts, and access the extension's signer object for secure transaction signing (private keys never leave the user's extension).
+*   **Blockchain Interaction:** Leverages **`@polkadot/api`** to:
+    *   Connect to a public Polkadot RPC node via WebSocket.
+    *   Construct a native `balances.transferKeepAlive` transaction. This method is preferred over `transfer` as it prevents accidentally reaping (deactivating) recipient accounts that might fall below the existential deposit after the transfer.
+    *   Send the signed transaction to the network and track its status in real-time (e.g., `isInBlock`, `isFinalized`).
+    *   Use chain metadata (`api.registry`) for details like token decimals and symbols.
+*   **Gift Link/Claiming:**
+    *   Upon successful finalization of the transfer, a unique gift ID is generated (using `uuid`).
+    *   This ID is stored in the React application's state (simulating a simple backend database for this demo).
+    *   A claim link (`/claim?giftId=...`) is generated.
+    *   The Claim page reads the `giftId` from the URL (either automatically on load or via manual paste), fetches the details from the application state, and allows the user to "confirm" the claim (updating the local state).
+*   **No Custom Smart Contracts:** The core DOT transfer functionality relies entirely on the Polkadot network's native `balances` pallet, not on custom-deployed smart contracts.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack
 
-### `npm run build`
+*   **Frontend:**
+    *   React (v18+)
+    *   React Router (`react-router-dom`)
+    *   CSS3 (via `App.css`)
+    *   JavaScript (ES6+)
+*   **Polkadot Interaction:**
+    *   `@polkadot/api`
+    *   `@polkadot/extension-dapp`
+    *   `@polkadot/util` (for BN.js, formatting)
+    *   `@polkadot/keyring` (for address validation)
+*   **Utilities:**
+    *   `uuid`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started (Local Development)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Follow these instructions to set up and run the project locally.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Prerequisites
 
-### `npm run eject`
+*   [Node.js](https://nodejs.org/) (v16 or later recommended)
+*   [npm](https://www.npmjs.com/) (usually comes with Node.js) or [Yarn](https://yarnpkg.com/)
+*   [Git](https://git-scm.com/)
+*   [Polkadot{.js} Browser Extension](https://polkadot.js.org/extension/) (or a compatible extension like Talisman) installed and set up with an account funded on the Polkadot network.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Installation & Running
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/joboyebisi/mintmonieapp.git
+    ```
+    *(Note: Use the correct repository URL if it differs)*
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2.  **Navigate to the project directory:**
+    ```bash
+    cd mintmonieapp
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+    *(or `yarn install`)*
 
-## Learn More
+4.  **Start the development server:**
+    ```bash
+    npm start
+    ```
+    *(or `yarn start`)*
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5.  **Open the app:**
+    The application should automatically open in your default browser at `http://localhost:3000`. If not, navigate to that URL manually.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Deployment
 
-### Code Splitting
+This application is deployed to Vercel. The deployment is configured to automatically update when changes are pushed to the `main` branch of the linked GitHub repository (`joboyebisi/mintmonieapp`).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+*   **Live URL:** [https://mintmonieapp-avjnquaye-job-oyebisis-projects.vercel.app/](https://mintmonieapp-avjnquaye-job-oyebisis-projects.vercel.app/)
 
-### Analyzing the Bundle Size
+## Future Improvements / TODOs
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+*   Integrate with SpaceWalk/Pendulum for DOT -> USDC swaps.
+*   Implement MoneyGram withdrawal functionality (requires specific API/integration details).
+*   Replace simulated gift tracking state with a proper backend database or on-chain storage solution.
+*   Enhance UI/UX with better loading indicators, detailed transaction progress, and more comprehensive error handling.
+*   Add support for other wallets (e.g., WalletConnect).
+*   Implement unit and integration tests.
 
-### Making a Progressive Web App
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*(Optional: Add license information here, e.g., MIT License)*
