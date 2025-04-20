@@ -31,7 +31,42 @@ Check out the live deployment on Vercel:
     *   A claim link (`/claim?giftId=...`) is generated.
     *   The Claim page reads the `giftId` from the URL (either automatically on load or via manual paste), fetches the details from the application state, and allows the user to "confirm" the claim (updating the local state).
 *   **No Custom Smart Contracts:** The core DOT transfer functionality relies entirely on the Polkadot network's native `balances` pallet, not on custom-deployed smart contracts.
+## How It Works (For Users)
 
+Using MintMonie to send Polkadot gifts is simple:
+
+1.  **Connect Your Wallet:**
+    *   Click the "Connect Wallet" button.
+    *   Your Polkadot{.js} browser extension (or similar compatible wallet like Talisman) will pop up, asking you to approve the connection. Your funds and private keys always stay safe within your extension.
+    *   Select the account you want to send the gift from. The app can now see your selected account address but cannot perform actions without your explicit approval for each transaction.
+
+2.  **Send a DOT Gift:**
+    *   Navigate to the "Send Gift" page.
+    *   Enter the recipient's Polkadot address (make sure it's correct!).
+    *   Enter the amount of DOT you wish to send as a gift.
+    *   Click "Send Gift & Create Link".![MintMonie 2](https://github.com/user-attachments/assets/838fae93-dd86-43a2-84e4-9869c5ae9e45)
+
+    *   Your wallet extension will pop up again, sho![MintMonie 1](https://github.com/user-attachments/assets/8a765926-05e6-4d08-a08d-bf4f66d7bc24)
+wing the transaction details and asking you to confirm and sign the transaction with your password.
+    *   Once the transaction is confirmed on the blockchain (usually takes a few seconds), the app will display a unique **Gift Link**.
+
+3.  **Share the Gift Link:**
+    *   Copy the generated Gift Link
+
+    *   Share this link with your friend or family member through any messaging app, email, etc.
+
+4.  **Recipient Claims the Gift:**
+    *   The recipient clicks the special Gift Link you shared.
+    *   This takes them to the "Claim Gift" page in the MintMonie app, which automatically loads the gift details from the link.
+    *   They will need to connect their *own* Polkadot wallet.
+    *   They can then see the gift details and click "Confirm Claim & Proceed to Swap". This currently marks the gift as claimed in the app's tracking and prepares them for the next step. *(Note: The actual DOT was already sent in Step 2; this step acknow![MintMonie 3](https://github.com/user-attachments/assets/c6300a10-5c83-45bb-b07c-061120152345)
+ledges receipt).*
+
+5.  **(Future) Swap & Withdraw:**
+    *   After confirming the claim, the user is redirected to the "Swap" page.
+    *   *(Planned Feature)* This page will allow the user to swap the received DOT for a stablecoin like USDC using integrations like SpaceWalk.
+    *   *(Planned Feature)* Following the swap, further in![MintMonie 4](https://github.com/user-attachments/assets/e8b6194e-9b46-4d1d-85b1-9139be1a20cf)
+tegration (e.g., with MoneyGram via SpaceWalk/Pendulum) would allow withdrawing the value.
 ## Tech Stack
 
 *   **Frontend:**
